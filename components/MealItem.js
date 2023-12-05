@@ -1,6 +1,13 @@
 import { View, Text, Image, StyleSheet, Pressable } from "react-native";
 
-function MealItem({ title, imageUrl, duration, complexity, affordability }) {
+function MealItem({
+  title,
+  imageUrl,
+  duration,
+  complexity,
+  affordability,
+  onPress,
+}) {
   return (
     <View style={styles.container}>
       <Pressable
@@ -8,7 +15,7 @@ function MealItem({ title, imageUrl, duration, complexity, affordability }) {
           styles.button,
           pressed ? styles.buttonPressed : null,
         ]}
-        // onPress={}
+        onPress={onPress}
       >
         <Image style={styles.image} source={{ uri: imageUrl }} />
         <Text style={styles.title}>{title}</Text>
