@@ -1,4 +1,4 @@
-import { useLayoutEffect } from "react";
+import { useContext, useLayoutEffect } from "react";
 import {
   View,
   Image,
@@ -11,13 +11,22 @@ import {
 import { MEALS } from "../data/dummy-data";
 import List from "../components/List";
 import IconButton from "../components/IconButton";
+import { FavouritesContext } from "../store/context/favourites-context";
 
 function DetailsScreen({ route, navigation }) {
+  const favouriteMealsCtx = useContext(FavouritesContext);
+
   const mealId = route.params.mealId;
   const selectedMeal = MEALS.find((meal) => meal.id === mealId);
 
-  function headerButtonPressed() {
-    console.log("header button pressed");
+  const mealIsFavourite = favouriteMealsCtx.ids.includes(mealId);
+
+  function addRemoveFavourites() {
+    if (mealIsFavourite) {
+      favouriteMealsCtx.removeFavourite(mealId);
+    } else {
+      favouriteMealsCtx.addFavourite(mealId);
+    }
   }
 
   useLayoutEffect(() => {
@@ -25,11 +34,15 @@ function DetailsScreen({ route, navigation }) {
       title: selectedMeal.title,
       headerRight: () => {
         return (
-          <IconButton icon="star" color="white" onPress={headerButtonPressed} />
+          <IconButton
+            icon={mealIsFavourite ? "star" : "star-outline"}
+            color="white"
+            onPress={addRemoveFavourites}
+          />
         );
       },
     });
-  }, [selectedMeal, navigation, headerButtonPressed]);
+  }, [selectedMeal, navigation, addRemoveFavourites]);
 
   return (
     <ScrollView>
