@@ -30,14 +30,7 @@ function MealsScreen({ route, navigation }) {
       complexity: item.complexity,
       affordability: item.affordability,
     };
-
-    function pressHandler() {
-      navigation.navigate("DetailsScreen", {
-        mealId: item.id,
-      });
-    }
-
-    return <MealItem {...mealItemProps} onPress={pressHandler} />;
+    return <MealItem {...mealItemProps} />;
   }
 
   return (
